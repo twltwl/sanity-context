@@ -7,7 +7,7 @@
     "sanity-plugin"
   ],
   "license": "MIT",
-  "author": "Tobias Ljungberg",
+  "author": "Tommy Ljungberg",
   "type": "module",
   "sideEffects": false,
   "exports": {
