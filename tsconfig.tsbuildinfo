@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/plugin.ts","./src/store.ts","./src/types.ts","./src/components/contexticon.tsx","./src/components/contextitem.tsx","./src/components/contextnavbar.tsx","./src/components/contextpopover.tsx"],"version":"5.9.3"}

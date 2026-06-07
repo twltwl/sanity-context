@@ -1,0 +1,62 @@
+{
+  "name": "sanity-context",
+  "version": "0.1.0",
+  "description": "Sanity Studio plugin for managing studio-wide context (brand, locale, market, etc.)",
+  "keywords": [
+    "sanity",
+    "sanity-plugin"
+  ],
+  "license": "MIT",
+  "author": "Tobias Ljungberg",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "link-watch": "plugin-kit link-watch",
+    "prepublishOnly": "npm run build",
+    "watch": "pkg-utils watch --strict"
+  },
+  "peerDependencies": {
+    "@sanity/icons": ">=2",
+    "@sanity/ui": ">=2",
+    "react": "^18",
+    "sanity": "^3"
+  },
+  "devDependencies": {
+    "@sanity/icons": "^2",
+    "@sanity/pkg-utils": "^6",
+    "@sanity/plugin-kit": "^4",
+    "@sanity/ui": "^2",
+    "@types/react": "^18",
+    "eslint": "^9",
+    "react": "^18",
+    "sanity": "^3",
+    "typescript": "^5"
+  },
+  "sanityPlugin": {
+    "verifyPackage": {
+      "packageName": false,
+      "sanityV2Json": false,
+      "eslintImports": false
+    }
+  }
+}
