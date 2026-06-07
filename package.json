@@ -1,6 +1,6 @@
 {
   "name": "sanity-context",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sanity Studio plugin for managing studio-wide context (brand, locale, market, etc.)",
   "keywords": [
     "sanity",
