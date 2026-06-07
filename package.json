@@ -12,9 +12,9 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
+      "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
