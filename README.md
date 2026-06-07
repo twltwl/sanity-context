@@ -4,7 +4,7 @@ A [Sanity Studio](https://www.sanity.io) plugin that adds a persistent context s
 
 The selected context is stored in `localStorage` and made available to any part of your Studio (document lists, previews, custom tools) via a simple subscription API.
 
-![Demo of the context switcher in the Studio navbar](./demo.gif)
+![Demo of the context switcher in the Studio navbar](https://raw.githubusercontent.com/twltwl/sanity-context/main/demo.gif)
 
 ## Features
 
