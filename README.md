@@ -11,6 +11,7 @@ The selected context is stored in `localStorage` and made available to any part 
 - Adds a toggle button to the Studio navbar
 - Supports any number of named context dimensions (brand, locale, market, etc.)
 - Each dimension has a list of options and can be independently enabled/toggled
+- Dimensions with more than 8 options get a searchable field that narrows the list as you type
 - Selection persists across sessions via `localStorage`
 - Resolver function API: derive available options from the current user's roles and workspace at runtime
 - Subscribe to context changes from anywhere in your Studio
@@ -182,6 +183,23 @@ Each `ContextDefinition`:
 | `title` | `string` | Label shown in the navbar UI |
 | `options` | `ContextOption[]` | Available choices (`{value, title}`) |
 | `defaultValue` | `string` | Selected value when no stored preference exists |
+
+## Local development
+
+```sh
+npm install
+npm run dev
+```
+
+`npm run dev` starts a preview harness on [http://localhost:5199](http://localhost:5199) — the
+context popover in a stand-in navbar, with three dimensions (3, 8 and 30 options) so both the plain
+menu and the searchable field are visible. It reads `src/` directly, so changes hot-reload. Handy
+URLs: `?open=1` opens the popover on load, `?open=1&q=ger` also types into the locale search, and
+`?open=1&scenario-clear=<stage>` replays the locale field through `select` → `clear` → `search` →
+`blur`, stopping at the stage you name.
+
+The harness mounts `ContextPopover` directly, so it does not exercise the resolver path in
+`ContextNavbar`. To test that, or anything else against a real Studio, use `npm run link-watch`.
 
 ## License
 

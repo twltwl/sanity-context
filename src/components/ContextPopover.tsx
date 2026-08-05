@@ -1,9 +1,9 @@
 import {useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore} from 'react'
-import {Button, Card, Layer, Menu, MenuButton, MenuItem, Portal, Stack, Text, Tooltip} from '@sanity/ui'
-import {CheckmarkIcon} from '@sanity/icons'
+import {Button, Card, Layer, Portal, Stack, Text, Tooltip} from '@sanity/ui'
 import {ContextIcon} from './ContextIcon'
 
 import {ContextItem} from './ContextItem'
+import {ContextSelect} from './ContextSelect'
 import {getContext, getContextDefinitions, setContextEntry, subscribeToContext} from '../store'
 
 function useContextState() {
@@ -32,7 +32,8 @@ export function ContextPopover() {
       const target = e.target as Element
       if (triggerRef.current?.contains(target)) return
       if (cardRef.current?.contains(target)) return
-      if (target.closest?.('[data-context-ui]')) return
+      // Menus and the autocomplete list render in their own portals
+      if (target.closest?.('[data-context-ui], [data-ui="Popover"]')) return
       setOpen(false)
     }
     document.addEventListener('mousedown', handler)
@@ -59,13 +60,10 @@ export function ContextPopover() {
               ref={cardRef}
               style={{position: 'fixed', top: coords.top, right: coords.right}}
             >
-              <Card data-context-ui padding={3} shadow={2} style={{minWidth: 260}}>
+              <Card data-context-ui padding={3} shadow={2} style={{minWidth: 300}}>
                 <Stack space={3}>
                   {definitions.map((def) => {
                     const entry = state[def.id]
-                    const currentTitle =
-                      def.options.find((o) => o.value === entry?.value)?.title ??
-                      def.options[0]?.title
 
                     return (
                       <ContextItem
@@ -75,30 +73,12 @@ export function ContextPopover() {
                         enabled={entry?.enabled ?? false}
                         onToggle={(enabled) => setContextEntry(def.id, {enabled})}
                       >
-                        <MenuButton
-                          button={
-                            <Button
-                              text={currentTitle}
-                              fontSize={1}
-                              padding={2}
-                              mode="ghost"
-                              style={{width: '100%'}}
-                            />
-                          }
-                          id={`sanity-context-menu-${def.id}`}
-                          menu={
-                            <Menu data-context-ui>
-                              {def.options.map((opt) => (
-                                <MenuItem
-                                  key={opt.value}
-                                  text={opt.title}
-                                  icon={entry?.value === opt.value ? CheckmarkIcon : undefined}
-                                  onClick={() => setContextEntry(def.id, {value: opt.value})}
-                                />
-                              ))}
-                            </Menu>
-                          }
-                          popover={{placement: 'bottom-start'}}
+                        <ContextSelect
+                          id={def.id}
+                          options={def.options}
+                          value={entry?.value}
+                          defaultValue={def.defaultValue}
+                          onChange={(value) => setContextEntry(def.id, {value})}
                         />
                       </ContextItem>
                     )

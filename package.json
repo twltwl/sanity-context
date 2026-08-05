@@ -31,6 +31,7 @@
   },
   "scripts": {
     "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "dev": "vite --config dev/vite.config.ts",
     "link-watch": "plugin-kit link-watch",
     "prepublishOnly": "npm run build",
     "watch": "pkg-utils watch --strict"
@@ -47,10 +48,15 @@
     "@sanity/plugin-kit": "^4",
     "@sanity/ui": "^2",
     "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4",
     "eslint": "^9",
     "react": "^18",
+    "react-dom": "^18",
     "sanity": "^3",
-    "typescript": "^5"
+    "styled-components": "^6",
+    "typescript": "^5",
+    "vite": "^5"
   },
   "sanityPlugin": {
     "verifyPackage": {
@@ -58,5 +64,12 @@
       "sanityV2Json": false,
       "eslintImports": false
     }
+  },
+  "allowScripts": {
+    "esbuild@0.25.6": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.24.2": true,
+    "esbuild@0.28.0": true,
+    "esbuild@0.21.5": true
   }
 }

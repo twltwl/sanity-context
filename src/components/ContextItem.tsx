@@ -25,7 +25,7 @@ export function ContextItem({id, label, enabled, onToggle, children}: Props) {
         />
         <Label size={1}>{label}</Label>
       </Flex>
-      <Box style={{width: 150, opacity: enabled ? 1 : 0.35, pointerEvents: enabled ? 'auto' : 'none'}}>
+      <Box style={{width: 180, opacity: enabled ? 1 : 0.35, pointerEvents: enabled ? 'auto' : 'none'}}>
         {children}
       </Box>
     </Flex>
