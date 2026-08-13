@@ -12,12 +12,18 @@ function defaultState(definitions: ContextDefinition[]): ContextState {
   return Object.fromEntries(definitions.map((d) => [d.id, {enabled: false, value: d.defaultValue}]))
 }
 
+/** Whatever was persisted is untrusted — every field is read defensively below. */
+function isStoredState(value: unknown): value is Partial<Record<string, Partial<ContextEntry>>> {
+  return typeof value === 'object' && value !== null
+}
+
 function loadFromStorage(definitions: ContextDefinition[]): ContextState {
   if (typeof window === 'undefined') return defaultState(definitions)
   try {
     const raw = localStorage.getItem(_storageKey)
     if (!raw) return defaultState(definitions)
-    const saved = JSON.parse(raw) as ContextState
+    const parsed: unknown = JSON.parse(raw)
+    const saved = isStoredState(parsed) ? parsed : {}
     return Object.fromEntries(
       definitions.map((d) => [
         d.id,

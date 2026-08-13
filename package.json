@@ -12,64 +12,66 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
+  },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19 <22 || >=22.12"
   },
   "scripts": {
     "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
     "dev": "vite --config dev/vite.config.ts",
+    "format": "oxfmt .",
     "link-watch": "plugin-kit link-watch",
+    "lint": "oxlint",
     "prepublishOnly": "npm run build",
     "watch": "pkg-utils watch --strict"
   },
+  "dependencies": {
+    "@sanity/icons": "^5",
+    "@sanity/ui": "^4"
+  },
   "peerDependencies": {
-    "@sanity/icons": ">=2",
-    "@sanity/ui": ">=2",
-    "react": "^18",
-    "sanity": "^3"
+    "react": "^19",
+    "sanity": "^6"
   },
   "devDependencies": {
-    "@sanity/icons": "^2",
-    "@sanity/pkg-utils": "^6",
-    "@sanity/plugin-kit": "^4",
-    "@sanity/ui": "^2",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@vitejs/plugin-react": "^4",
-    "eslint": "^9",
-    "react": "^18",
-    "react-dom": "^18",
-    "sanity": "^3",
+    "@sanity/browserslist-config": "^1.0.5",
+    "@sanity/pkg-utils": "^12",
+    "@sanity/plugin-kit": "^10",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "react": "^19",
+    "react-dom": "^19",
+    "sanity": "^6",
     "styled-components": "^6",
-    "typescript": "^5",
-    "vite": "^5"
+    "typescript": "^7",
+    "vite": "^8"
   },
   "sanityPlugin": {
     "verifyPackage": {
-      "packageName": false,
-      "sanityV2Json": false,
-      "eslintImports": false
+      "packageName": false
     }
   },
+  "browserslist": "extends @sanity/browserslist-config",
   "allowScripts": {
-    "esbuild@0.25.6": true,
-    "esbuild@0.25.12": true,
-    "esbuild@0.24.2": true,
-    "esbuild@0.28.0": true,
-    "esbuild@0.21.5": true
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true
   }
 }

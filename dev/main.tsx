@@ -9,8 +9,12 @@
  */
 import {useEffect, useSyncExternalStore} from 'react'
 import {createRoot} from 'react-dom/client'
-import {Box, Card, Code, Container, Flex, Stack, Text, ThemeProvider} from '@sanity/ui'
+import {Box, Card, Container, Flex, Stack, Text, ThemeProvider} from '@sanity/ui'
+import {Code} from '@sanity/ui/code'
 import {buildTheme} from '@sanity/ui/theme'
+// v4 ships static styles as a plain stylesheet rather than injecting them at runtime. The Studio
+// loads this itself; this standalone harness has to.
+import '@sanity/ui/styles.css'
 
 import {ContextPopover} from '../src/components/ContextPopover'
 import {getContext, initContextStore, setContextEntry, subscribeToContext} from '../src/store'
@@ -81,7 +85,7 @@ function App() {
       }
       // stages: select -> clear -> search -> blur
       const stage = params.get('scenario-clear') || 'clear'
-      ;(async () => {
+      void (async () => {
         await sleep(150)
         const field = () =>
           document.querySelector<HTMLInputElement>('#sanity-context-autocomplete-locale')!
@@ -135,7 +139,7 @@ function App() {
         </Card>
 
         <Container width={1} paddingX={4} paddingY={5}>
-          <Stack space={4}>
+          <Stack gap={4}>
             <Text size={1} muted>
               Click the context icon in the top right. <b>Brand</b> (3) and <b>Market</b> (8) render a
               plain menu; <b>Locale</b> (30) renders the searchable field — type to narrow it.

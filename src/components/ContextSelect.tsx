@@ -1,6 +1,8 @@
 import {useRef, useState} from 'react'
-import {Autocomplete, Button, Card, Flex, Menu, MenuButton, MenuItem, Text} from '@sanity/ui'
-import {CheckmarkIcon} from '@sanity/icons'
+import {Button, Card, Flex, Text} from '@sanity/ui'
+import {Autocomplete} from '@sanity/ui/autocomplete'
+import {Menu, MenuButton, MenuItem} from '@sanity/ui/menu'
+import {CheckmarkIcon} from '@sanity/icons/Checkmark'
 import type {ContextOption} from '../types'
 
 /** Above this many options the plain menu is replaced by a filterable search field */

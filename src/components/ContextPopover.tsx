@@ -1,5 +1,6 @@
 import {useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore} from 'react'
-import {Button, Card, Layer, Portal, Stack, Text, Tooltip} from '@sanity/ui'
+import {Button, Card, Layer, Portal, Stack, Text} from '@sanity/ui'
+import {Tooltip} from '@sanity/ui/tooltip'
 import {ContextIcon} from './ContextIcon'
 
 import {ContextItem} from './ContextItem'
@@ -27,13 +28,14 @@ export function ContextPopover() {
   }, [open])
 
   useEffect(() => {
-    if (!open) return
+    if (!open) return undefined
     const handler = (e: MouseEvent) => {
-      const target = e.target as Element
+      const target = e.target
+      if (!(target instanceof Element)) return
       if (triggerRef.current?.contains(target)) return
       if (cardRef.current?.contains(target)) return
       // Menus and the autocomplete list render in their own portals
-      if (target.closest?.('[data-context-ui], [data-ui="Popover"]')) return
+      if (target.closest('[data-context-ui], [data-ui="Popover"]')) return
       setOpen(false)
     }
     document.addEventListener('mousedown', handler)
@@ -61,7 +63,7 @@ export function ContextPopover() {
               style={{position: 'fixed', top: coords.top, right: coords.right}}
             >
               <Card data-context-ui padding={3} shadow={2} style={{minWidth: 300}}>
-                <Stack space={3}>
+                <Stack gap={3}>
                   {definitions.map((def) => {
                     const entry = state[def.id]
 

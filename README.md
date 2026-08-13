@@ -22,6 +22,8 @@ The selected context is stored in `localStorage` and made available to any part 
 npm install sanity-context
 ```
 
+Requires Sanity Studio v6 and React 19. (Studio v3/v4 users: stay on `sanity-context@0.2.0`.)
+
 ## Basic usage
 
 Static options — all editors see the same choices:
