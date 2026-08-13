@@ -22,7 +22,8 @@ The selected context is stored in `localStorage` and made available to any part 
 npm install sanity-context
 ```
 
-Requires Sanity Studio v6 and React 19. (Studio v3/v4 users: stay on `sanity-context@0.2.0`.)
+Requires Sanity Studio v6 and React 19. Studios on v3/v4 should stay on `0.2.x` — see
+[Migrating from 0.2.x](#migrating-from-02x).
 
 ## Basic usage
 
@@ -186,6 +187,23 @@ Each `ContextDefinition`:
 | `options` | `ContextOption[]` | Available choices (`{value, title}`) |
 | `defaultValue` | `string` | Selected value when no stored preference exists |
 
+## Migrating from 0.2.x
+
+`1.0.0` targets Sanity Studio v6. The plugin's own API is unchanged — `contextPlugin`,
+`getContext` and `subscribeToContext` all behave exactly as before, and stored `localStorage` state
+is read as-is, so editors keep their selections. What changed is the environment it runs in:
+
+- **Studio v6 and React 19 are required.** The upgrade is driven by `@sanity/ui` v4 and
+  `@sanity/icons` v5, which Studio v6 ships. There is no build that works on both, so Studios on
+  v3/v4 should stay on `0.2.x`.
+- **The package is ESM-only.** No CommonJS build is published; `require('sanity-context')` now
+  loads the ESM build through Node's `require(esm)` support, which needs Node 20.19+ or 22.12+.
+- **`@sanity/ui` and `@sanity/icons` are regular dependencies**, not peers. You no longer need
+  them installed alongside the plugin, and version conflicts with your Studio's copies are handled
+  by npm rather than by a peer range.
+- **TypeScript sources are no longer published.** If you resolved the `source` export condition or
+  imported from `sanity-context/src/...`, import from the package root instead.
+
 ## Local development
 
 ```sh
@@ -202,6 +220,22 @@ URLs: `?open=1` opens the popover on load, `?open=1&q=ger` also types into the l
 
 The harness mounts `ContextPopover` directly, so it does not exercise the resolver path in
 `ContextNavbar`. To test that, or anything else against a real Studio, use `npm run link-watch`.
+
+## Releasing
+
+Publish with **pnpm**, not npm:
+
+```sh
+pnpm publish
+```
+
+`@sanity/pkg-utils` needs a `source` export condition pointing at `src/index.ts` to know what to
+build, and that condition must not reach consumers — `src` isn't shipped, so it would resolve to
+nothing. `publishConfig.exports` strips it at publish time, which pnpm and yarn honour but npm does
+not (npm treats `publishConfig` as npm config keys only and warns `Unknown publishConfig config
+"exports"`). Publishing with `npm publish` would ship a dangling `source` condition.
+
+Everything else — installing, building, linting — is plain npm.
 
 ## License
 
