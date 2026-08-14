@@ -4,7 +4,10 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "preserve",
-    "jsx": "preserve",
+    // pkg-utils reads the JSX transform from this file, so "preserve" would emit raw JSX into
+    // dist/index.js and break every consumer. plugin-kit's verify-package insists on "preserve"
+    // here, which is why its tsconfig check is disabled in package.json — see the comment there.
+    "jsx": "react-jsx",
     "rootDir": ".",
     "outDir": "dist",
     "noEmit": true

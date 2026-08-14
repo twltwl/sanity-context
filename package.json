@@ -31,12 +31,13 @@
     "node": ">=20.19 <22 || >=22.12"
   },
   "scripts": {
-    "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean && npm run verify-dist",
     "dev": "vite --config dev/vite.config.ts",
     "format": "oxfmt .",
     "link-watch": "plugin-kit link-watch",
     "lint": "oxlint",
     "prepublishOnly": "npm run build",
+    "verify-dist": "node --check dist/index.js",
     "watch": "pkg-utils watch --strict"
   },
   "dependencies": {
@@ -66,7 +67,9 @@
   },
   "sanityPlugin": {
     "verifyPackage": {
-      "packageName": false
+      "packageName": false,
+      "_comment_tsconfig": "plugin-kit requires jsx:preserve in the tsconfig pkg-utils builds with, but pkg-utils reads its JSX transform from that same file — preserve emits raw JSX into dist and breaks consumers (shipped as 1.0.0). tsconfig.dist.json uses react-jsx instead; the `verify-dist` script guards the output.",
+      "tsconfig": false
     }
   },
   "browserslist": "extends @sanity/browserslist-config",
