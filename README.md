@@ -11,6 +11,7 @@ The selected context is stored in `localStorage` and made available to any part 
 - Adds a toggle button to the Studio navbar
 - Supports any number of named context dimensions (brand, locale, market, etc.)
 - Each dimension has a list of options and can be independently enabled/toggled
+- Optional per-dimension `description`, shown as a tooltip when an editor hovers the title
 - Dimensions with more than 8 options get a searchable field that narrows the list as you type
 - Selection persists across sessions via `localStorage`
 - Resolver function API: derive available options from the current user's roles and workspace at runtime
@@ -184,8 +185,32 @@ Each `ContextDefinition`:
 |---|---|---|
 | `id` | `string` | Unique identifier, used as the key in `ContextState` |
 | `title` | `string` | Label shown in the navbar UI |
+| `description` | `string` | Optional. Tooltip explaining what the dimension is for |
 | `options` | `ContextOption[]` | Available choices (`{value, title}`) |
 | `defaultValue` | `string` | Selected value when no stored preference exists |
+
+### Describing a dimension
+
+`description` is optional and explains what a dimension is for. A dimension that has one gets a
+small info icon next to its title in the popover, and hovering the title shows the text as a
+tooltip — useful when "Market" or "Environment" doesn't tell an editor much on its own.
+
+```ts
+contextPlugin({
+  contexts: [
+    {
+      id: 'market',
+      title: 'Market',
+      description: 'Scopes content to a regional market — countries sharing pricing and campaigns.',
+      options: [
+        {value: 'nordics', title: 'Nordics'},
+        {value: 'dach', title: 'DACH'},
+      ],
+      defaultValue: 'nordics',
+    },
+  ],
+})
+```
 
 ## Migrating from 0.2.x
 
@@ -213,8 +238,9 @@ npm run dev
 
 `npm run dev` starts a preview harness on [http://localhost:5199](http://localhost:5199) — the
 context popover in a stand-in navbar, with three dimensions (3, 8 and 30 options) so both the plain
-menu and the searchable field are visible. It reads `src/` directly, so changes hot-reload. Handy
-URLs: `?open=1` opens the popover on load, `?open=1&q=ger` also types into the locale search, and
+menu and the searchable field are visible. Brand and Market carry a `description`, so the title
+tooltip is visible there; Locale deliberately has none. It reads `src/` directly, so changes
+hot-reload. Handy URLs: `?open=1` opens the popover on load, `?open=1&q=ger` also types into the locale search, and
 `?open=1&scenario-clear=<stage>` replays the locale field through `select` → `clear` → `search` →
 `blur`, stopping at the stage you name.
 

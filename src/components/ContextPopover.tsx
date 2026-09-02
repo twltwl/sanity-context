@@ -72,6 +72,7 @@ export function ContextPopover() {
                         key={def.id}
                         id={`sanity-context-${def.id}`}
                         label={def.title}
+                        description={def.description}
                         enabled={entry?.enabled ?? false}
                         onToggle={(enabled) => setContextEntry(def.id, {enabled})}
                       >

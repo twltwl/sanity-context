@@ -34,6 +34,7 @@ initContextStore(
       // 3 options -> plain menu
       id: 'brand',
       title: 'Brand',
+      description: 'Which brand’s content the Studio shows. Affects document lists and previews.',
       options: [
         {value: 'acme', title: 'Acme'},
         {value: 'globex', title: 'Globex'},
@@ -45,13 +46,14 @@ initContextStore(
       // 8 options -> still a plain menu (the threshold boundary)
       id: 'market',
       title: 'Market',
+      description: 'The regional market to scope content to — countries sharing pricing and campaigns.',
       options: [
         'Nordics', 'DACH', 'Benelux', 'UK & Ireland', 'France', 'Iberia', 'Italy', 'APAC',
       ].map((title) => ({value: title.toLowerCase().replace(/\W+/g, '-'), title})),
       defaultValue: 'nordics',
     },
     {
-      // 30 options -> searchable
+      // 30 options -> searchable. No description — shows an un-annotated title for comparison.
       id: 'locale',
       title: 'Locale',
       options: LOCALES.map((value) => ({value, title: `${languageNames.of(value)} (${value})`})),
@@ -142,7 +144,9 @@ function App() {
           <Stack gap={4}>
             <Text size={1} muted>
               Click the context icon in the top right. <b>Brand</b> (3) and <b>Market</b> (8) render a
-              plain menu; <b>Locale</b> (30) renders the searchable field — type to narrow it.
+              plain menu; <b>Locale</b> (30) renders the searchable field — type to narrow it.{' '}
+              <b>Brand</b> and <b>Market</b> carry a <code>description</code>, so their titles show an
+              info icon and a tooltip on hover; <b>Locale</b> has none.
             </Text>
             <Box>
               <StateReadout />

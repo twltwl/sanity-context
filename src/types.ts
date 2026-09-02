@@ -10,6 +10,8 @@ export interface ContextOption {
 export interface ContextDefinition {
   id: string
   title: string
+  /** Shown as a tooltip when the editor hovers the title in the popover */
+  description?: string
   options: ContextOption[]
   defaultValue: string
 }
